@@ -9,6 +9,7 @@ import { clsx } from 'clsx'
 import { FullConversationType } from '../../types/index'
 import useOtherUser from '../../hooks/useOtherUser'
 import Avatar from '../../components/Avatar'
+import AvatarGroup from '@/app/components/AvatarGroup'
 
 interface ConversationBoxProps {
 	data: FullConversationType
@@ -21,6 +22,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
 	const router = useRouter()
 
 	const handleClick = useCallback(() => {
+		router.refresh()
 		router.push(`/conversations/${data.id}`)
 	}, [data.id, router])
 
@@ -71,7 +73,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ data, selected }) => 
 			)}
 			onClick={handleClick}
 		>
-			<Avatar user={otherUser} />
+			{data?.isGroup ? <AvatarGroup users={data?.user} /> : <Avatar user={otherUser} />}
 			<div className="min-w-0 flex-1">
 				<div className="focus:outline-none">
 					<div className="flex justify-between items-center mb-1">
